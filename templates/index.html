@@ -1,0 +1,124 @@
+{% extends "wrapper.html" %}
+{% load static %}
+{% block content %}
+                    <!-- END APP HEADER  -->
+                    
+                    <!-- START PAGE HEADING -->
+                    <div class="app-heading app-heading-bordered app-heading-page">
+                        <div class="icon icon-lg">
+                            <span class="icon-laptop-phone"></span>
+                        </div>
+                        <div class="title">
+                            <h1>Bosh sahifa</h1>
+                            <p>Manager panel</p>
+                        </div>               
+                    <div class="container">
+                                                
+                        <div class="row">
+                            <div class="col-md-4">    
+                                <div class="app-widget-tile app-widget-highlight">
+                                    <div class="line">
+                                        <div class="subtitle"><span class="fa fa-users"></span> Jami xodimlar : {{ employees }} ta</div>
+                                    </div>
+                                    <br><br>
+                                    <div class="line">
+                                        <div class="title text-center">
+                                            <span class="label label-success label-ghost label-bordered">Bugun {{ all_employee }} ta qo'shildi <span class="fa fa-check-square-o"></span></span>
+                                        </div>
+                                    </div>
+                                    <br><br>
+                                    <button type="button" class="btn btn-secondary btn-xs"><a href="{% url "main:employee" %}">Xodimlar ro'yxati</button>
+                                </div>                                                                        
+                            </div>
+                            <div class="col-md-4">      
+                                <div class="app-widget-tile app-widget-highlight">
+                                    <div class="line">
+                                        <div class="subtitle"><span class="fa fa-list"></span> Jami topshiriqlar : {{ tasks }} ta</div>
+                                    </div>
+                                    <br><br>
+                                    <div class="line">
+                                        <div class="title text-center">
+                                            <span class="label label-warning label-ghost label-bordered">Bugun {{ all_tasks }} ta qo'shildi <span class="fa fa-check-square-o"></span></span>
+                                        </div>
+                                    </div>
+                                    <br><br>                                  
+                                    <button type="button" class="btn btn-secondary btn-xs"><a href="{% url 'main:task' %}">Topshiriqlar ro'yxati</a></button>
+                                </div>                                   
+                            </div>
+                            <div class="col-md-4">      
+                                <div class="app-widget-tile app-widget-highlight">
+                                    <div class="line">
+                                        <div class="subtitle"><span class="fa fa-money"></span> Jami avanslar : {{ advances }} ta</div>
+                                    </div>
+                                    <br><br>
+                                    <div class="line">
+                                        <div class="title text-center">
+                                            <span class="label label-warning label-ghost label-bordered">Bugun {{ all_advances }} ta qo'shildi <span class="fa fa-check-square-o"></span></span>
+                                        </div>
+                                    </div>
+                                    <br><br>                                     
+                                    <button type="button" class="btn btn-secondary btn-xs"><a href="{% url 'main:advance' %}">Avanslar ro'yxati</a></button>
+                                </div>                                 
+                            </div>
+                        </div>
+                          
+                        <div class="row hidden-mobile">
+                            <div class="col-md-12">                        
+                                <!-- START LATEST TRANSACTIONS -->                     
+                                <div class="block block-condensed">
+                                    <div class="app-heading">                                        
+                                        <div class="title">
+                                            <h2>Bugungi Topshiriqlar</h2>
+                                        </div>              
+                                    </div>
+                                    <div class="block-content">
+                                        <div class="table-responsive">
+                                            <table class="table table-clean-paddings margin-bottom-0">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Xodimlar</th>
+                                                        <th>Topshiriqlar</th>
+                                                        <th>Holati</th>
+                                                        <th>Vaqti</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for task in today_tasks %}
+                                                    <tr>
+                                                        <td>
+                                                            {% if task.employees.exists %}
+                                                            {% for employee in task.employees.all %}
+                                                                {{ employee.full_name }}
+                                                                {% if not forloop.last %}, {% endif %}
+                                                            {% endfor %}
+                                                            {% else %}
+                                                                Mavjud emas
+                                                            {% endif %}   
+                                                        </td>
+                                                        <td><h6><a href="{% url 'main:task' task.id %}">{{ task.name }}</a></h6></td>
+                                                        <td><h6>{{ task.get_task_status_display }}</h6></td>
+                                                        <td><h6>{{ task.add_date|date:"H:i"}}</h6></td>
+                                                    </tr>
+                                                    {% endfor %}                                                                                       
+                                                </tbody>     
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- END LATEST TRANSACTIONS -->
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <!-- END PAGE CONTAINER -->                 
+                </div>
+                <!-- END APP CONTENT -->                               
+            </div>
+            <!-- END APP CONTAINER -->
+            <!-- APP OVERLAY -->
+            <div class="app-overlay"></div>
+            <!-- END APP OVERLAY -->
+        </div>        
+        <!-- END APP WRAPPER -->                
+{% endblock %}

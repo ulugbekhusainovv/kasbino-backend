@@ -1,0 +1,53 @@
+{% extends "wrapper.html" %}
+{% load static %}
+{% block content %}
+                    
+                    <!-- START PAGE HEADING -->
+                    <!-- END PAGE HEADING -->
+                    <div class="heading-elements hidden-mobile" style="margin-left: 10px;">
+                        <a href="{% url 'main:add_employee' %}" id="addEmployeeLink">
+                            <button class="btn btn-primary btn-icon-fixed" style="margin-top: 10px;"><span class="fa fa-user-plus"></span> Xodim qo'shish </button>
+                        </a>
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            {% for e in employees %}
+                            <div class="col-md-4 col-xs-6 padding-top-50">                                
+                                <div class="block block-condensed padding-top-5">
+                                    <div class="list-group">                                        
+                                        <div class="list-group-item"><span class="fa fa-user"></span> Xodim: {{ e.full_name }}</div>                                                                                                                                                         
+                                    </div>     
+                                    <div class="list-group">                                        
+                                        <div class="list-group-item"><span class="fa fa-suitcase"></span> Lavozimi: {{ e.get_position_display }}</div>
+                                        <div class="list-group-item"><span class="fa fa-phone"></span> Telefon raqami: {{ e.phone_number }}</div>  
+                                        <div class="list-group-item"><span class="fa fa-star-half-empty"></span> Holati: {{ e.get_employee_attendance_display }}</div>  
+                                        <div class="list-group-item"><span class="fa fa-send"></span> Telegram ID: {{ e.telegram_id }}</a></div>
+
+                                        <div class="block-content padding-20">
+                                            <div class="row">
+                                                <div class="col-md-6"> 
+                                                    <a href="{% url 'main:update_employee' e.id %}" class="btn btn-info btn-clean btn-block btn-xs"><span class="fa fa-pencil"></span> Taxrirlash</a>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <a href="{% url 'main:delete_employee' e.id %}" class="btn btn-danger btn-clean btn-block btn-xs"><span class="fa fa-trash-o"></span> O'chirish</a>
+                                                </div>                                                    
+                                            </div>                                        
+                                        </div>                                                                                                                                                             
+                                    </div>                                     
+                                </div>                                
+                            </div>
+                            {% endfor %}
+                        </div>                        
+                    </div>
+                    <!-- END PAGE CONTAINER -->
+                </div>
+                <!-- END APP CONTENT -->
+                                
+            </div>
+            
+            <!-- APP OVERLAY -->
+            <div class="app-overlay"></div>
+            <!-- END APP OVERLAY -->
+        </div>        
+        <!-- END APP WRAPPER -->                
+        {% endblock %}

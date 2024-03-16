@@ -1,0 +1,67 @@
+{% extends "wrapper.html" %}
+{% load static %}
+{% block content %}
+<!-- START PAGE HEADING -->
+<div class="app-heading app-heading-bordered app-heading-page">                        
+    <div class="title">
+        <h1>Topshiriq qo'shish</h1>
+    </div>               
+</div>
+
+<!-- END PAGE HEADING -->
+<div class="heading-elements hidden-mobile" style="margin-left: 20px;">
+    <a href="{% url 'main:task' %}" id="addTaskLink">
+        <button class="btn btn-primary btn-icon-fixed" style="margin-top: 10px;"><span class="fa fa-reorder"></span> Topshiriqlar ro'yxati </button>
+    </a>
+</div>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="block-content padding-top-20">
+        <div class="row">
+            <div class="col-md-12 col-xs-6">    
+                <div class="block block-condensed padding-top-5">
+                    <div class="list-group">                                        
+                        <div class="list-group-item">
+                            <label for="task_name"><span class="fa fa-pencil-square-o"></span> Topshiriq nomi:</label>
+                            <input type="text" name="name" id="task_name" class="form-control" required>
+                        </div>
+                        <div class="list-group-item">
+                            <label  for="employees"><span class="fa fa-users"></span> Xodimlar :</label>
+                            <select name="employees" id="employees" class="form-control" multiple required>
+                                {% for xodim in xodimlar %}
+                                    <option value="{{ xodim.id }}">{{ xodim.full_name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>     
+                    <div class="block-content padding-top-20">
+                        <div class="row">
+                            <div class="col-md-3 col-md-offset-4">
+                                <button type="submit" class="btn btn-success btn-clean btn-block btn-xs"><span class="fa fa-download"></span> Saqlash</button>
+                            </div>                                                  
+                        </div>                                        
+                    </div>
+                </div>                                
+            </div>
+        </div>                        
+    </div>
+</form>
+
+<script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // MultiSelectTag yaratamiz, 'employees' ID elementini olish uchun
+            new MultiSelectTag('employees', {
+                rounded: true,
+                shadow: true,
+                placeholder: 'Qidirish',
+                tagColor: {
+                    textColor: '#327b2c',
+                    borderColor: '#92e681',
+                    bgColor: '#eaffe6',
+                },
+            });
+            wrapperBody = document.querySelector('.btn-container')
+            wrapperBody.style.backgroundColor = 'aqua';
+        });
+</script>        
+{% endblock %}

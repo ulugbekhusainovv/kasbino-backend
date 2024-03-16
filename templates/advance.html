@@ -1,0 +1,98 @@
+{% extends "wrapper.html" %}
+{% load static %}
+{% block content %}
+                    
+                    <!-- START PAGE HEADING -->
+                    <div class="app-heading app-heading-bordered app-heading-page">                        
+                        <div class="title">
+                            <h1>Avanslar ro'yxati</h1>
+                            <p>Botga a'zo bo'lgan xodimlar avans olish uchun xabarlari</p>
+                        </div>               
+                    </div>
+                    <!-- END PAGE HEADING -->
+                    
+                    <!-- START PAGE CONTAINER -->
+                    <div class="container">
+                        <div class="row">
+                            {% for a in advance %}
+                            <div class="col-md-6 col-xs-6">                                
+                                <div class="block block-condensed padding-top-5">    
+                                    <div class="list-group">
+                                        <div class="list-group-item"><span class="fa fa-user"></span> Xodim : {{ a.employees.full_name }}</div>                                          
+                                        <div class="list-group-item"><span class="fa fa-suitcase"></span> Lavozimi : {{ a.employees.get_position_display }}</div>
+                                        <div class="list-group-item"><span class="fa fa-paper-plane-o"></span> Telegram_id : {{ a.employees.telegram_id }}</div>
+                                        <div class="list-group-item"><span class="fa fa-dollar"></span> Avans miqdori : {{ a.amount }} so'm</div>
+                                        <div class="list-group-item"><span class="fa fa-commenting-o"></span> Sababi : {{ a.desc }}</div>                                                                                                                                                                
+                                        <div class="list-group-item"><span class="fa fa-clock-o"></span> Vaqti : {{ a.employees.add_date|date:"H:i, F j, Y" }}</div> 
+                                        <div class="list-group-item">
+                                            <span class="fa fa-comments-o"></span> Javob yozish: <br>
+                                            <form method="post" action="{% url 'main:advance' %}" id="send_to_user_form">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="advance_id" value="{{ a.id }}">
+                                                <input type="text" name="answer" class="form-control" placeholder="Javobingizni yozing...">
+                                                <button type="submit" class="btn btn-primary btn-xs send-to-user">Yuborish</button>
+                                            </form>
+                                        </div>  
+                                        <div class="list-group-item">
+                                            <div class="block-content padding-top-5">
+                                                <div class="row">
+                                                    <div class="col-md-4 ">
+                                                        <a href="{% url 'main:delete_advance' a.id %}" class="btn btn-danger btn-clean btn-block btn-xs"><span class="fa fa-trash-o"></span> O'chirish</a>
+                                                    </div>                                                    
+                                                </div>                                        
+                                            </div> 
+                                        </div>                                                                                                                                           
+                                    </div>    
+                                </div>                                
+                            </div>
+                            {% endfor %}
+                        </div>                        
+                    </div>
+                    
+                    <!-- END PAGE CONTAINER -->
+                    
+                </div>
+                <!-- END APP CONTENT -->
+                                
+            </div>
+            
+            <!-- APP OVERLAY -->
+            <div class="app-overlay"></div>
+            <!-- END APP OVERLAY -->
+        </div>  
+        <style>
+            .btn-custom {
+                background-color: #000;
+                color: #fff;
+            }
+        </style>          
+        <!-- END APP WRAPPER -->      
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const answerInputs = document.querySelectorAll('input[name="answer"]');
+        const submitButtons = document.querySelectorAll('.send-to-user');
+
+        answerInputs.forEach(function(answerInput, index) {
+            const submitButton = submitButtons[index];
+
+            // Yangi qiymat kiritildikda tekshirish
+            answerInput.addEventListener('input', function() {
+                if (answerInput.value.trim() !== '') {
+                    submitButton.style.display = 'inline-block';
+                } else {
+                    submitButton.style.display = 'none';
+                }
+            });
+
+            // Sahifani yukladiqda bir martalik tekshirish
+            if (answerInput.value.trim() !== '') {
+                submitButton.style.display = 'inline-block';
+            } else {
+                submitButton.style.display = 'none';
+            }
+        });
+    });
+</script>
+          
+        {% endblock %}

@@ -1,0 +1,67 @@
+{% extends "simple_wrapper.html" %}
+{% load static %}
+
+{% block content %}
+<!-- Start Page Heading -->
+<div class="page-heading">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <h1>Topshiriqlarni tahrirlash</h1>
+        <ul class="breadcrumb">
+          <li><a href="{% url 'main:home' %}">Bosh sahifa</a></li>
+          <li class="active">Topshiriqlar tahrirlash</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Page Heading -->
+
+<!-- Start Page Content -->
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Topshiriqlarni tahrirlash</h3>
+        </div>
+        <div class="panel-body">
+          <form method="post" action="{% url 'main:simple_update_task' pk=task.pk %}">
+            {% csrf_token %}
+            <div class="form-group">
+              <label for="id_name">Topshiriq nomi:</label>
+              {{ form.name }}
+            </div>
+            <div class="form-group">
+              <label for="id_employees">Xodimlar:</label>
+              {{ form.employees }}
+            </div>
+            <button type="submit" class="btn btn-primary">Saqlash</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+      // MultiSelectTag yaratamiz, 'employees' ID elementini olish uchun
+      new MultiSelectTag('id_employees', {
+          rounded: true,
+          shadow: true,
+          placeholder: 'Qidirish',
+          tagColor: {
+              textColor: '#327b2c',
+              borderColor: '#92e681',
+              bgColor: '#eaffe6',
+          },
+      });
+      wrapperBody = document.querySelector('.btn-container')
+      textArea = document.querySelector("#id_name")
+      textArea.style.width = "370px"
+      textArea.style.height = "100px"
+      wrapperBody.style.backgroundColor = 'aqua';
+  });
+</script>   
+{% endblock %}

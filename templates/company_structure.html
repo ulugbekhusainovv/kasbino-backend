@@ -1,0 +1,94 @@
+{% extends "wrapper.html" %}
+{% load static %}
+{% block content %}
+
+<!-- START PAGE CONTAINER -->
+{% if latest_company_info is not None %}
+<div class="block-content padding-top-0">
+    <div class="row">
+        <div class="col-md-12">    
+            <div class="block block-condensed padding-top-50">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="list-group">                                        
+                        <div class="list-group-item col-md-12">
+                            <label for="task_name">{{ latest_company_info.text }}</label>
+                        </div>
+
+                        <div class="list-group-item col-md-6">
+                            <label for="task_name"></label>
+                            {% if latest_company_info.image %}
+                            <div class="image-container">
+                                <img src="{{ latest_company_info.image.url }}" alt="Rasm" width="415" height="300">
+                            </div>
+                            {% endif %}
+                        </div>
+                
+                        <div class="list-group-item col-md-6">
+                            <label for="task_name"></label>
+                            {% if latest_company_info.video %}
+                            <div class="video-container">
+                                <video width="415" height="300" controls>
+                                    <source src="{{ latest_company_info.video.url }}" type="video/mp4">
+                                </video>
+                            </div>
+                            {% endif %}
+                        </div>
+                        <div class="list-group-item col-md-3">
+                            <a href="{% url 'main:update_company_structure' latest_company_info.id %}" class="btn btn-primary btn-clean btn-block btn-xs">
+                                <span class="fa fa-refresh"></span> Ma'lumotni yangilash
+                            </a> 
+                        </div>
+                    </div> 
+                </form>
+            </div>                                
+        </div>
+    </div>                        
+</div>
+{% else %}
+
+<div class="block-content padding-top-0">
+    <div class="row">
+        <div class="col-md-12"">    
+            <div class="block block-condensed padding-top-50">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="list-group">                                        
+                        <div class="list-group-item col-md-12">
+                            <label for="text">Korxona strukturasi haqida ma'lumot kiriting:</label>
+                            <input type="text" name="text" id="text" required>
+                        </div>
+
+                        <div class="list-group-item col-md-6">
+                            <label for="image">Rasm yuklang:</label>
+                            <input type="file" name="image" id="image" accept="image/*">
+                        </div>
+
+                        <div class="list-group-item col-md-6">
+                            <label for="video">Video yuklang:</label>
+                            <input type="file" name="video" id="video" accept="video/*">
+                        </div>
+
+                        <div class="list-group-item col-md-12">
+                            <button type="submit" class="btn btn-primary">Saqlash</button>                            
+                        </div>
+                    </div>
+
+                    {% if messages %}
+                        <ul class="messages">
+                            {% for message in messages %}
+                                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+
+                </form>
+            </div>                                
+        </div>
+    </div>                        
+</div>
+
+{% endif %}
+
+<!-- END APP WRAPPER -->                
+{% endblock %}

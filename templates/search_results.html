@@ -1,0 +1,35 @@
+{% extends "wrapper.html" %}
+{% load static %}
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 col-xs-6">                                
+            <div class="block block-condensed padding-top-5">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Xodimlar</th>
+                            <th>Status</th>
+                            <th>Telegram_ID</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for result in results %}
+                        <tr>                                         
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ result.full_name }}</td>
+                            <td> {{result.get_position_display }} </td>
+                            <td>{{ result.telegram_id }}</td>
+                        </tr> 
+                        {% endfor %}
+                    </tbody>
+                </table>  
+            </div>                                
+        </div>
+    </div>                        
+</div>
+</div>
+{% endblock %}
+

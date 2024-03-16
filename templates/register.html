@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ro'yxatdan o'tish</title>
+    <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <div class="col-md-0 pd-0 app app-fh">
+        <div class="app-container" style="background: url('{% static "assets/images/background/bg-1.jpg" %}') center center no-repeat fixed;">
+            <div class="app-login-box">
+                <div class="app-login-box-title padding-top-30">
+                    <div class="title">Ro'yxatdan o'tish</div>
+                </div>
+                <div class="app-login-box-container margin-top-20">
+                    <form id="registration-form" action="{% url 'main:register' %}" method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="id_username">Username kiriting :</label>
+                            <input type="text" class="form-control" name="username" placeholder="Username kiriting">
+                            {% if form.errors.username %}
+                                <p class="error-message">{{ form.errors.username }}</p>
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            <label for="id_password1">Parolni kiriting :</label>
+                            <input type="password" class="form-control" name="password1" placeholder="Parolni kiriting">
+                            {% if form.errors.password1 %}
+                                <p class="error-message">{{ form.errors.password1 }}</p>
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            <label for="id_password2">Paarolni tasdiqlang :</label>
+                            <input type="password" class="form-control" name="password2" placeholder="Parolni tasdiqlang">
+                            {% if form.errors.password2 %}
+                                <p class="error-message">{{ form.errors.password2 }}</p>
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success btn-block">Ro'yxatdan o'tish</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+
+    <script>
+        document.getElementById("registration-form").addEventListener("submit", function (event) {
+            var username = document.getElementById("id_username").value;
+            var password1 = document.getElementById("id_password1").value;
+            var password2 = document.getElementById("id_password2").value;
+
+            if (!/^[a-zA-Z0-9.@_+-]{1,150}$/.test(username) || !/^[a-zA-Z0-9.@_+-]{8,}$/.test(password1) || password1 !== password2) {
+                event.preventDefault();
+                document.getElementById("error-message").innerText = "Foydalanuvchi nomi 150 belgidan kamroq, parol 8 belgidan kamroq va to'g'ri kiritilganligi tekshirilishi kerak.";
+                document.getElementById("error-message").innerText = "Iltimos, barcha maydonlarni to'ldiring."; // Xatolik xabarni chiqaramiz
+            }
+        });
+    </script>
+</body>
+</html>

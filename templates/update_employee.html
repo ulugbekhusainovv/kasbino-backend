@@ -1,0 +1,32 @@
+{% extends "wrapper.html" %}
+{% load static %}
+{% block content %}
+                    
+<div class="heading-elements hidden-mobile" style="margin-left: 10px;">
+    <a href="{% url 'main:employee' %}" id="addEmployeeLink">
+        <button class="btn btn-twitter btn-icon-fixed"><span class="fa fa-list-alt"></span> Xodimlar ro'yxati </button>
+    </a>
+</div>
+
+<!-- START PAGE CONTAINER -->
+<div class="container">
+    <div class="row">
+        <div class="col-md-10 col-xs-6">                                
+            <div class="block block-condensed padding-top-20">     
+                <div class="list-group">                                        
+                    <!-- Update Employee Form -->
+                    <form method="post" action="{% url 'main:update_employee' employee.pk %}" class="block-content padding-20">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <button type="submit" class="btn btn-success"><span class="fa fa-download"></span> Saqlash</button>
+                    </form>
+                    <!-- End Update Employee Form -->
+                </div>                                                                                                                                                             
+            </div>                                
+        </div>
+    </div>                        
+</div>
+
+<!-- END PAGE CONTAINER -->
+               
+{% endblock %}

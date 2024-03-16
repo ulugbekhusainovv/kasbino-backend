@@ -1,0 +1,45 @@
+{% extends "wrapper.html" %}
+{% load static %}
+{% block content %}
+                    <!-- END PAGE HEADING -->
+                    <div class="heading-elements hidden-mobile" style="margin-left: 10px;">
+                        <a href="{% url 'main:register' %}" id="addEmployeeLink">
+                            <button class="btn btn-primary btn-icon-fixed" style="margin-top: 10px;"><span class="fa fa-user-plus"></span> Ro'yxatdan o'tish </button>
+                        </a>
+                    </div>
+                    <!-- START PAGE CONTAINER -->
+                    <div class="container">
+                        <div class="row">
+                            {% for e in user %}
+                            <div class="col-md-4 col-xs-6">                                
+                                <div class="block block-condensed padding-top-5">
+                                    <div class="list-group">                                        
+                                        <div class="list-group-item"><span class="fa fa-user"></span> {{ e.username }}</div>                                                                                                                                                         
+                                        <div class="list-group-item"><span class="fa fa-circle"></span> ID: {{ e.id }}</div>                                                                                                                                                         
+                                    </div>     
+                                    <div class="list-group">
+                                        <div class="block-content padding-20">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <a href="{% url 'main:delete_admins' e.id %}" class="btn btn-danger btn-clean btn-block btn-xs"><span class="fa fa-trash-o"></span> O'chirish</a>
+                                                </div>                                                    
+                                            </div>                                        
+                                        </div>                                                                                                                                                            
+                                    </div>                                     
+                                </div>                                
+                            </div>
+                            {% endfor %}
+                        </div>                        
+                    </div>
+                    <!-- END PAGE CONTAINER -->
+                </div>
+                <!-- END APP CONTENT -->
+                                
+            </div>
+            
+            <!-- APP OVERLAY -->
+            <div class="app-overlay"></div>
+            <!-- END APP OVERLAY -->
+        </div>        
+        <!-- END APP WRAPPER -->                
+        {% endblock %}
