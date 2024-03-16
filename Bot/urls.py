@@ -21,8 +21,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    # path('9101880c-d469-4214-8298-33f98ba6dea3/',include('botapi.urls')),
-    path('api/',include('botapi.urls')),
+    path('f04b9654-72d1-46fe-8d65-e595ef2dda85/',include('botapi.urls')),
     path('admin/', admin.site.urls),
     path('', include('app.urls')),
 ]

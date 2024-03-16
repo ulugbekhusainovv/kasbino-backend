@@ -11,6 +11,7 @@
 <!-- START PAGE CONTAINER -->
 <div class="container">
     <div class="row">
+        {% if tasks %}
         {% for task in tasks %}
         <div class="col-md-6 col-xs-6">                                
             <div class="block block-condensed padding-top-5">
@@ -52,10 +53,16 @@
             </div>                                
         </div>
         {% endfor %}
+        {% else %}
+        <div class="alert alert-danger" role="alert" style="margin-top:60px">
+            <ul>
+                <h2>Topshiriqlar mavjud emas</h2>
+            </ul>
+        </div>
+        {% endif %}
     </div>                        
 </div>
 <!-- END PAGE CONTAINE
-
 <! END APP CONTENT -->
 </div>
 <!-- END APP WRAPPER -->                

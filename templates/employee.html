@@ -11,6 +11,7 @@
                     </div>
                     <div class="container">
                         <div class="row">
+                            {% if employees %}
                             {% for e in employees %}
                             <div class="col-md-4 col-xs-6 padding-top-50">                                
                                 <div class="block block-condensed padding-top-5">
@@ -22,7 +23,6 @@
                                         <div class="list-group-item"><span class="fa fa-phone"></span> Telefon raqami: {{ e.phone_number }}</div>  
                                         <div class="list-group-item"><span class="fa fa-star-half-empty"></span> Holati: {{ e.get_employee_attendance_display }}</div>  
                                         <div class="list-group-item"><span class="fa fa-send"></span> Telegram ID: {{ e.telegram_id }}</a></div>
-
                                         <div class="block-content padding-20">
                                             <div class="row">
                                                 <div class="col-md-6"> 
@@ -37,12 +37,18 @@
                                 </div>                                
                             </div>
                             {% endfor %}
+                            {% else %}
+                            <div class="alert alert-danger" role="alert" style="margin-top:60px">
+                                <ul>
+                                    <h2>Xodimlar mavjud emas</h2>
+                                </ul>
+                            </div>
+                            {% endif %}
                         </div>                        
                     </div>
                     <!-- END PAGE CONTAINER -->
                 </div>
                 <!-- END APP CONTENT -->
-                                
             </div>
             
             <!-- APP OVERLAY -->

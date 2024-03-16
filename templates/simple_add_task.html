@@ -35,6 +35,7 @@
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
         <div class="row">
+            {% if xodimlar %}
             <div class="col-md-10 col-xs-6">    
                 <div class="block block-condensed padding-top-5">
                     <div class="list-group">                                        
@@ -60,10 +61,16 @@
                     </div>
                 </div>                                
             </div>
+            {% else %}
+            <div class="alert alert-danger" role="alert" style="margin-top:60px">
+                <ul>
+                    <h2>Topshiriq qo'shishni imkoni yo'q chunki Xodimlar mavjud emas</h2>
+                </ul>
+            </div>
+            {% endif %}
         </div>                        
     </form>   
 </div>
-
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         // MultiSelectTag yaratamiz, 'employees' ID elementini olish uchun
