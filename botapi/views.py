@@ -1,11 +1,14 @@
-from .serializer import EmployeeSerializer,TaskSerializer, TelegramUserSerializer, AdvanceSerializer, OfferSerializer, ComplaintSerializer, CompanyInfoSerializer, CompanyStructureSerializer, AttendanceSerializer
+from .serializer import (EmployeeSerializer,TaskSerializer, TelegramUserSerializer, AdvanceSerializer, OfferSerializer, ComplaintSerializer, CompanyInfoSerializer, CompanyStructureSerializer, AttendanceSerializer)
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
-from app.models import Employee, Task,TelegramUser, Advance, CompanyInfo, CompanyStructure, Offer, Complaint, Attendance
-from datetime import timezone, datetime
+from app.models import (Employee, Task,TelegramUser, Advance, CompanyInfo, CompanyStructure, Offer, Complaint, Attendance)
+from datetime import  datetime
 import pytz
+from rest_framework.exceptions import ValidationError
+
+
 class BotUserViewset(ModelViewSet):
     queryset = TelegramUser.objects.all()
     serializer_class = TelegramUserSerializer
@@ -50,7 +53,7 @@ class EmployeeViewset(ModelViewSet):
 #         else:
 #             return Response({'error':'Not found'},status=status.HTTP_404_NOT_FOUND)
 
-from rest_framework.exceptions import ValidationError
+
 
 class GetEmployee(APIView):
     def get(self, request, *args, **kwargs):
@@ -208,13 +211,13 @@ class GetComplaint(APIView):
 
 class CompanyInfoAPIView(APIView):
     def get(self, request, *args, **kwargs):
-        company_info = CompanyInfo.objects.all()  # Masalan, birinchi kompaniya ma'lumoti
+        company_info = CompanyInfo.objects.all()
         serializer = CompanyInfoSerializer(company_info, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
     
 class CompanyStructureAPIView(APIView):
     def get(self, request, *args, **kwargs):
-        company_structure = CompanyStructure.objects.all()  ## Hamma kompaniya strukturasini olish
+        company_structure = CompanyStructure.objects.all()
         serializer = CompanyStructureSerializer(company_structure, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
     

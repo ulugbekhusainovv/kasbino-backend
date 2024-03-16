@@ -13,15 +13,16 @@ from datetime import timedelta, datetime
 import requests, os
 from .forms import EmployeeForm, TaskForm, CompanyInfoForm, CompanyStructureForm
 from .models import Task, Employee, TelegramUser, Advance, CompanyInfo, CompanyStructure, Offer, Complaint 
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Bot
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 
 bot_token = "6967615919:AAGxLCWgolQagotzm0ubQLQXPso_W7HNBVE"
+
 class HomeView(LoginRequiredMixin, TemplateView):
     template_name = 'index.html'
 
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_superuser:
-            return redirect('main:simple_admin')  # Agar foydalanuvchi superuser emas bo'lsa, oddiy foydalanuvchi sahifasiga yo'naltirish
+            return redirect('main:simple_admin')
         return super().dispatch(request, *args, **kwargs)
     
     def get_context_data(self, **kwargs):
@@ -161,7 +162,7 @@ class SimpleAddTaskView(LoginRequiredMixin, View):
 class TaskUpdateView(LoginRequiredMixin, UpdateView):
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_superuser:
-            return redirect('main:simple_update_task')  # Agar foydalanuvchi superuser emas bo'lsa, oddiy foydalanuvchi sahifasiga yo'naltirish
+            return redirect('main:simple_update_task')
         return super().dispatch(request, *args, **kwargs)
     
     model = Task
@@ -294,7 +295,7 @@ class TaskView(LoginRequiredMixin, ListView):
 
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_superuser:
-            return redirect('main:simple_task')  # Agar foydalanuvchi superuser emas bo'lsa, oddiy foydalanuvchi sahifasiga yo'naltirish
+            return redirect('main:simple_task')
         return super().dispatch(request, *args, **kwargs)
     
     def get_context_data(self, **kwargs):
@@ -335,7 +336,7 @@ class SimpleTaskUpdateView(LoginRequiredMixin, UpdateView):
 class DeleteTaskView(LoginRequiredMixin, View):
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_superuser:
-            return redirect('main:simple_task')  # Agar foydalanuvchi superuser emas bo'lsa, oddiy foydalanuvchi sahifasiga yo'naltirish
+            return redirect('main:simple_task')
         return super().dispatch(request, *args, **kwargs)
     
 

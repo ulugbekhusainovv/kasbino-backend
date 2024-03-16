@@ -1,5 +1,6 @@
 from django.urls import path
 from .views import (CompanyStructureUpdateView, CompanyStructureView, CompanyInfoUpdateView, CompanyInfoView, DeleteComplaintView, ComplaintView, OfferView, DeleteOfferView, DeleteAdminsView, AdminsView, SearchView, HomeView, DeleteAdvanceView, EmployeeView, AddEmployeeView, UpdateEmployeeView, DeleteEmployeeView, TaskView, DeleteTaskView, TaskDetailView, AddTaskView, TaskUpdateView, AdvanceView, login_view, logout_view , RegisterView, SimpleAddTaskView, SimpleView, SimpleTaskView, SimpleTaskDetailView, SimpleTaskUpdateView, SimpleDeleteTaskView)
+
 app_name = 'main'
 
 urlpatterns = [
@@ -33,7 +34,7 @@ urlpatterns = [
     # simple admin
     path("simple_admin/", SimpleView.as_view(), name='simple_admin'),
     path("simple_task/", SimpleTaskView.as_view(), name='simple_task'),
-    path("simple_add_task", SimpleAddTaskView.as_view(), name='simple_add_task'),
+    path("simple_add_task/", SimpleAddTaskView.as_view(), name='simple_add_task'),
     path('simple_task/<int:pk>/', SimpleTaskDetailView.as_view(), name='simple_task'),
     path('simple_update_task/<int:pk>/', SimpleTaskUpdateView.as_view(), name='simple_update_task'),
     path('simple_delete_task/<int:pk>/delete', SimpleDeleteTaskView.as_view(), name='simple_delete_task'),

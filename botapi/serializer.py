@@ -1,5 +1,5 @@
 
-from app.models import Employee, Task,TelegramUser, Advance, CompanyInfo, CompanyStructure, Offer, Complaint, Attendance
+from app.models import (Employee, Task,TelegramUser, Advance, CompanyInfo, CompanyStructure, Offer, Complaint, Attendance)
 from rest_framework import serializers
 
 class EmployeeSerializer(serializers.ModelSerializer):

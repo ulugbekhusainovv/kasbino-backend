@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Task, Employee, CompanyInfo, CompanyStructure, TelegramUser, Advance, Complaint, Offer,Attendance
+from .models import (Task, Employee, CompanyInfo, CompanyStructure, TelegramUser, Advance, Complaint, Offer,Attendance)
 from django.utils.html import format_html
 
 # Register your models here.
