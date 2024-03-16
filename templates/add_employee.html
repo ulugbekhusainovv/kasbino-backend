@@ -12,6 +12,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
+            {% if users %}
             <h2>Xodim qo'shish</h2>
             <form action="{% url 'main:add_employee' %}" method="post">
                 {% csrf_token %}
@@ -46,6 +47,13 @@
                     <button type="submit" class="btn btn-success"><span class="fa fa-save"></span> Saqlash</button>
                 </div>
             </form>
+            {% else %}
+            <div class="alert alert-danger" role="alert" style="margin-top:60px">
+                <ul>
+                    <h2>Xodim qo'shishni imkoni yo'q chunki Botga start bosganlar hali mavjud emas</h2>
+                </ul>
+            </div>
+            {% endif %}
         </div>
     </div>
     {% if errors %}

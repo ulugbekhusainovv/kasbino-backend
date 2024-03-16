@@ -14,10 +14,12 @@
         <button class="btn btn-primary btn-icon-fixed" style="margin-top: 10px;"><span class="fa fa-reorder"></span> Topshiriqlar ro'yxati </button>
     </a>
 </div>
+<div class="container">
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     <div class="block-content padding-top-20">
         <div class="row">
+            {% if xodimlar %}
             <div class="col-md-12 col-xs-6">    
                 <div class="block block-condensed padding-top-5">
                     <div class="list-group">                                        
@@ -43,9 +45,18 @@
                     </div>
                 </div>                                
             </div>
+            {% else %}
+            <div class="alert alert-danger" role="alert" style="margin-top:60px">
+                <ul>
+                    <h2>Topshiriq qo'shishni imkoni yo'q chunki Xodimlar mavjud emas</h2>
+                </ul>
+            </div>
+            {% endif %}
         </div>                        
     </div>
 </form>
+</div>
+
 
 <script>
         document.addEventListener("DOMContentLoaded", function() {

@@ -358,7 +358,6 @@ class AddEmployeeView(LoginRequiredMixin, View):
     def get(self, request):
         form = self.form_class()
         users = TelegramUser.objects.all() 
-        print(users.last().telegram_id)
         return render(request, self.template_name, {'form': form, 'users': users})
     
     def post(self, request):
