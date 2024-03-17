@@ -1,13 +1,17 @@
 {% extends "wrapper.html" %}
 {% load static %}
 {% block content %}
-                    <!-- END PAGE HEADING -->
-                    <div class="heading-elements hidden-mobile" style="margin-left: 10px;">
-                        <a href="{% url 'main:register' %}" id="addEmployeeLink">
-                            <button class="btn btn-primary btn-icon-fixed" style="margin-top: 10px;"><span class="fa fa-user-plus"></span> Ro'yxatdan o'tish </button>
-                        </a>
-                    </div>
-                    <!-- START PAGE CONTAINER -->
+<div class="app-heading app-heading-bordered app-heading-page">                        
+    <div class="title">
+        <h1>Managerlar ro'yxati</h1>
+    </div>               
+</div>
+<!-- END PAGE HEADING -->
+<div class="heading-elements hidden-mobile" style="margin-left: 20px;">
+    <a href="{% url 'main:register' %}" id="addEmployeeLink">
+        <button class="btn btn-primary btn-icon-fixed" style="margin-top: 10px;"><span class="fa fa-reorder"></span> Ro'yxatdan o'tkazish </button>
+    </a>
+</div>
                     <div class="container">
                         <div class="row">
                             {% for e in user %}
