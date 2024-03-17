@@ -24,8 +24,8 @@ urlpatterns = [
     path('f04b9654-72d1-46fe-8d65-e595ef2dda85/',include('botapi.urls')),
     path('bca38f02-e349-49ea-8849-bf79e415a1f6/', admin.site.urls),
     path('', include('app.urls')),
-]
+]+ static(settings.STATIC_URL, documents_root=settings.STATIC_ROOT)+static(settings.MEDIA_URL, documents_root=settings.MEDIA_ROOT)
 
-if settings.DEBUG:
-    urlpatterns += static(settings.STATIC_URL ,document_root=settings.STATIC_ROOT)
-    urlpatterns += static(settings.MEDIA_URL ,document_root=settings.MEDIA_ROOT)
+# if settings.DEBUG:
+#     urlpatterns += static(settings.STATIC_URL ,document_root=settings.STATIC_ROOT)
+#     urlpatterns += static(settings.MEDIA_URL ,document_root=settings.MEDIA_ROOT)s
