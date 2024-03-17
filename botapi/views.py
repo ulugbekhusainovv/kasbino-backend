@@ -72,6 +72,7 @@ class GetEmployee(APIView):
 
 class TaskViewset(ModelViewSet):
     queryset = Task.objects.all()
+    tasks = Task.objects.filter().order_by('-add_date')
     serializer_class = TaskSerializer
 
 

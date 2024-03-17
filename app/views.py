@@ -358,7 +358,7 @@ class AddEmployeeView(LoginRequiredMixin, View):
 
     def get(self, request):
         form = self.form_class()
-        users = TelegramUser.objects.all() 
+        users = TelegramUser.objects.filter().order_by('-add_date')
         return render(request, self.template_name, {'form': form, 'users': users})
     
     def post(self, request):
@@ -372,7 +372,7 @@ class AddEmployeeView(LoginRequiredMixin, View):
             return redirect('main:employee')
         else:
             errors = form.errors
-            users = TelegramUser.objects.all() 
+            users = TelegramUser.objects.filter().order_by('-add_date')
         return render(request, self.template_name, {'form': form, "errors": errors, 'users': users})
 
 class EmployeeView(LoginRequiredMixin, ListView):
