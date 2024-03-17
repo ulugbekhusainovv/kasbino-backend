@@ -51,19 +51,19 @@
             <div class="app-container">
                 <!-- START SIDEBAR -->
                 <div class="app-sidebar app-navigation app-navigation-fixed scroll app-navigation-style-default app-navigation-open-hover dir-left" data-type="close-other">
-                    <a href="{% url 'main:home' %}" class="app-navigation-logo">
+                    <a href="{% url 'main:simple_admin' %}" class="app-navigation-logo">
                     </a>
                     <nav>
                         <ul>                            
                             <li>                                                                
-                                <a href="{% url 'main:home' %}"><span class="fa fa-home"></span> Bosh sahifa </a>
+                                <a href="{% url 'main:simple_admin' %}"><span class="fa fa-home"></span> Bosh sahifa </a>
                             </li>               
 
                             <li>
-                                <a href="{% url 'main:task' %}"><span class="icon-indent-increase"></span> Topshiriqlar ro'yxati </a>                                        
+                                <a href="{% url 'main:simple_task' %}"><span class="icon-indent-increase"></span> Topshiriqlar ro'yxati </a>                                        
                             </li>
                             <li>
-                                <a href="{% url 'main:add_task' %}"><span class="icon-plus-circle"></span> Topshiriqlar qo'shish</a>
+                                <a href="{% url 'main:simple_add_task' %}"><span class="icon-plus-circle"></span> Topshiriqlar qo'shish</a>
                             </li>     
                             
                             {% if request.user.is_authenticated %}
@@ -79,7 +79,7 @@
                     <div class="app-header">
                         <!-- START APP HEADER -->
                         <ul class="app-header-buttons">
-                            <li class="hidden-mobile"><a href="{% url 'main:home' %}" class="btn btn-link btn-icon"><span class="icon-home"></span></a></li>
+                            <li class="hidden-mobile"><a href="{% url 'main:simple_admin' %}" class="btn btn-link btn-icon"><span class="icon-home"></span></a></li>
                             <li class="visible-mobile"><a href="#" class="btn btn-link btn-icon" data-sidebar-toggle=".app-sidebar.dir-left"><span class="icon-menu"></span></a></li>
                             <li class="hidden-mobile"><a href="#" class="btn btn-link btn-icon" data-sidebar-minimize=".app-sidebar.dir-left"><span class="icon-screen"></span></a></li>
                         </ul>
@@ -89,7 +89,7 @@
                                 <div class="contact contact-rounded contact-bordered contact-lg contact-ps-controls">
                                     <img src="{% static 'img/user/no-image.png' %}" alt="John Doe">
                                     <div class="contact-container">
-                                        <a href="{% url 'main:home' %}">{{ user.username|title }}</a>
+                                        <a href="{% url 'main:simple_admin' %}">{{ user.username|title }}</a>
                                         <span>Administrator</span>
                                     </div>
                                     <div class="contact-controls">
