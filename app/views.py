@@ -190,7 +190,6 @@ class CompanyInfoView(LoginRequiredMixin, View):
             company_info = None
         return render(request, 'company_info.html', {'form': form, 'company_info': company_info})
 
-
     def is_video(self, file_path):
         video_extensions = ['.mp4', '.avi', '.mov', '.mkv', '.flv', '.wmv']
         _, extension = os.path.splitext(file_path)
