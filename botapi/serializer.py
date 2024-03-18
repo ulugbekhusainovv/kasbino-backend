@@ -1,5 +1,5 @@
 
-from app.models import (Employee, Task,TelegramUser, Advance, CompanyInfo, CompanyStructure, Offer, Complaint, Attendance)
+from app.models import (Employee, Task,TelegramUser, Advance, CompanyInfo, CompanyStructure, Offer, Complaint, Attendance, Category, CategoryStructure)
 from rest_framework import serializers
 
 class EmployeeSerializer(serializers.ModelSerializer):
@@ -8,6 +8,18 @@ class EmployeeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Employee
         fields = ['id', 'status', 'position', 'full_name', 'phone_number', 'add_date', 'telegram_id']
+
+
+class CategoryCompanyInfoSeralizer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = ['id', 'name']
+
+class CategoryStructureSeralizer(serializers.ModelSerializer):
+    class Meta:
+        model = CategoryStructure
+        fields = ['id', 'name']
+        
 
 class TaskSerializer(serializers.ModelSerializer):
     employees = EmployeeSerializer(many=True, read_only=True)
@@ -30,11 +42,14 @@ class TelegramUserSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class CompanyInfoSerializer(serializers.ModelSerializer):
+    category = CategoryCompanyInfoSeralizer(read_only=True)
     class Meta:
         model = CompanyInfo
         fields = '__all__'
+        # fields = ["text", "video", "image", "pdf", "category", "add_date"]
 
 class CompanyStructureSerializer(serializers.ModelSerializer):
+    category = CategoryStructureSeralizer(read_only=True)
     class Meta:
         model = CompanyStructure
         fields = '__all__'

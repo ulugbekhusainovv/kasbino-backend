@@ -1,11 +1,19 @@
 from django.urls import path
-from .views import (CompanyStructureUpdateView, CompanyStructureView, CompanyInfoUpdateView, CompanyInfoView, DeleteComplaintView, ComplaintView, OfferView, DeleteOfferView, DeleteAdminsView, AdminsView, SearchView, HomeView, DeleteAdvanceView, EmployeeView, AddEmployeeView, UpdateEmployeeView, DeleteEmployeeView, TaskView, DeleteTaskView, TaskDetailView, AddTaskView, TaskUpdateView, AdvanceView, login_view, logout_view , RegisterView, SimpleAddTaskView, SimpleView, SimpleTaskView, SimpleTaskDetailView, SimpleTaskUpdateView, SimpleDeleteTaskView)
+from .views import (CompanyStructureDeleteView, CompanyStructureAddView, CompanyStructureAddView, DeleteCategoryStructureView, AddCategoryStructureView, CompanyInfoDeleteView, CompanyInfoAddView, DeleteCategoryView, AddCategoryView, CompanyStructureUpdateView, CompanyStructureView, CompanyInfoUpdateView, CompanyInfoView, DeleteComplaintView, ComplaintView, OfferView, DeleteOfferView, DeleteAdminsView, AdminsView, SearchView, HomeView, DeleteAdvanceView, EmployeeView, AddEmployeeView, UpdateEmployeeView, DeleteEmployeeView, TaskView, DeleteTaskView, TaskDetailView, AddTaskView, TaskUpdateView, AdvanceView, login_view, logout_view , RegisterView, SimpleAddTaskView, SimpleView, SimpleTaskView, SimpleTaskDetailView, SimpleTaskUpdateView, SimpleDeleteTaskView)
 
 app_name = 'main'
 
 urlpatterns = [
     path("", HomeView.as_view(), name='home'),
     path("company_info/", CompanyInfoView.as_view(), name='company_info'),
+    path('company_info/delete/<int:pk>/', CompanyInfoDeleteView.as_view(), name='delete_company_info'),
+    path('delete_company_structure/delete/<int:pk>/', CompanyStructureDeleteView.as_view(), name='delete_company_structure'),
+    path("company_info_add/", CompanyInfoAddView.as_view(), name='company_info_add'),
+    path("company_structure_add/", CompanyStructureAddView.as_view(), name='company_structure_add'),
+    path("category_structure_add/", AddCategoryStructureView.as_view(), name='category_structure_add'),
+    path("add_category/", AddCategoryView.as_view(), name='add_category'),
+    path('delete_category/<int:category_id>/', DeleteCategoryView.as_view(), name='delete_category'),
+    path('delete_category_structure/<int:category_id>/', DeleteCategoryStructureView.as_view(), name='delete_category_structure'),
     path("company_structure/", CompanyStructureView.as_view(), name='company_structure'),
     path("employee/", EmployeeView.as_view(), name='employee'),
     path("add_employee/", AddEmployeeView.as_view(), name='add_employee'),  

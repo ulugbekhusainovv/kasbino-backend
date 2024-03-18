@@ -1,0 +1,70 @@
+{% extends "wrapper.html" %}
+{% load static %}
+{% block content %}
+
+<div class="block-content padding-top-40">
+    <div class="row">
+        <div class="col-md-12">    
+            <div class="block block-condensed padding-top-15">
+                <form method="post" enctype="multipart/form-data" id="company_infoForm">
+                    {% csrf_token %}
+                    <div class="list-group">                                        
+                        <div class="list-group-item">
+                            <label for="text"> Kategoriya nomini kiriting :</label>
+                            {{ form.category }}
+                        </div>
+
+                        <div class="list-group-item col-md-12">
+                            <label for="text">Korxona tavsifi haqida ma'lumot kiriting :</label>
+                            <input type="text" name="text" id="text" required>
+                        </div>
+
+                        <div class="list-group-item col-md-4">
+                            <label for="image">Faylni yuklang:</label>
+                            <input type="file" name="pdf" id="pdf" accept="file/*" >
+                        </div>
+
+                        <div class="list-group-item col-md-4">
+                            <label for="image">Rasm yuklang:</label>
+                            <input type="file" name="image" id="image" accept="image/*" >
+                        </div>
+
+                        <div class="list-group-item col-md-4">
+                            <label for="video">Video yuklang:</label>
+                            <input type="file" name="video" id="video" accept="video/*">
+                        </div>
+                        <div class="list-group-item col-md-12">
+                            <a href="{% url 'main:company_info' %}" class="btn btn-primary">
+                                <span class="fa fa-reply"></span> Ortga qaytish
+                            </a>
+                            <button type="submit" class="btn btn-success"><span class="fa fa-save"></span> Saqlash</button>
+                        </div>
+                    </div>
+
+                    {% if messages %}
+                        <ul class="messages">
+                            {% for message in messages %}
+                                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                
+                </form>
+            </div>                                
+        </div>
+    </div>                        
+</div> 
+<script>  
+    document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById("company_infoForm")
+        .addEventListener("submit", function (event) {
+          var textValue = document.getElementById("text").value.trim();
+  
+          if (textValue === "" ) {
+            alert("Iltimos, barcha maydonlarni to'ldiring!");
+            event.preventDefault();
+          }
+        });
+    });
+  </script>         
+{% endblock %}

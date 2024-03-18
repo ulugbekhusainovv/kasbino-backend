@@ -1,15 +1,25 @@
 from django import forms
-from .models import Employee, Task, CompanyInfo, CompanyStructure
+from .models import Employee, Task, CompanyInfo, CompanyStructure, Category, CategoryStructure
 
+class CategoryForm(forms.ModelForm):
+    class Meta:
+        model = Category
+        fields = ['name']
+        
+class CategoryStructureForm(forms.ModelForm):
+    class Meta:
+        model = CategoryStructure
+        fields = ['name']
+        
 class CompanyInfoForm(forms.ModelForm):
     class Meta:
         model = CompanyInfo
-        fields = ['text', 'video', 'image']
+        fields = ['category', 'text', 'video', 'image', 'pdf']
 
 class CompanyStructureForm(forms.ModelForm):
     class Meta:
         model = CompanyStructure
-        fields = ['text', 'video', 'image']
+        fields = ['category', 'text', 'video', 'image', 'pdf']
         
 class EmployeeForm(forms.ModelForm):
     class Meta:

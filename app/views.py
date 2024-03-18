@@ -11,8 +11,8 @@ from django.utils import timezone
 from django.urls import reverse_lazy
 from datetime import timedelta, datetime
 import requests, os
-from .forms import EmployeeForm, TaskForm, CompanyInfoForm, CompanyStructureForm
-from .models import Task, Employee, TelegramUser, Advance, CompanyInfo, CompanyStructure, Offer, Complaint 
+from .forms import EmployeeForm, TaskForm, CompanyInfoForm, CompanyStructureForm, CategoryForm, CategoryStructureForm
+from .models import Task, Employee, TelegramUser, Advance, CompanyInfo, CompanyStructure, Offer, Complaint, Category, CategoryStructure
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 
 bot_token = "6967615919:AAGxLCWgolQagotzm0ubQLQXPso_W7HNBVE"
@@ -185,33 +185,65 @@ class CompanyInfoView(LoginRequiredMixin, View):
     def get(self, request):
         form = CompanyInfoForm()
         try:
-            latest_company_info = CompanyInfo.objects.latest('add_date')
+            company_info = CompanyInfo.objects.all()
         except CompanyInfo.DoesNotExist:
-            latest_company_info = None
-        return render(request, 'company_info.html', {'form': form, 'latest_company_info': latest_company_info})
+            company_info = None
+        return render(request, 'company_info.html', {'form': form, 'company_info': company_info})
 
 
     def is_video(self, file_path):
         video_extensions = ['.mp4', '.avi', '.mov', '.mkv', '.flv', '.wmv']
         _, extension = os.path.splitext(file_path)
         return extension.lower() in video_extensions        
+    
+        
+class CompanyInfoAddView(View):
+    template_name = 'company_info_add.html'  # Bu shablon forma ko'rsatilgan sahifa nomi bo'lishi kerak
+
+    def get(self, request):
+        form = CompanyInfoForm()
+        return render(request, self.template_name, {'form': form})
 
     def post(self, request):
         form = CompanyInfoForm(request.POST, request.FILES)
-
         if form.is_valid():
-            video_file = request.FILES.get('video')
-            if video_file and not self.is_video(video_file.name):
-                form.add_error('video', 'Fayl formati noto\'g\'ri. Faqat video fayllarni yuklash mumkin.')
-                return render(request, 'company_info.html', {'form': form})
-
             form.save()
-            messages.success(request, 'Malumot muvaffaqiyatli saqlandi.')
-            return redirect('main:company_info')
+            return redirect('main:company_info')  # Ma'lumotlar bazasiga saqlandiktan so'ng "company_info" sahifasiga o'tkazib beriladi
         else:
-            messages.error(request, 'Xatolik yuz berdi, iltimos, ma\'lumotlarni tekshiring.')
-            return render(request, 'company_info.html', {'form': form})
+            errors = form.errors
+            return render(request, self.template_name, {'form': form, "errors": errors})
         
+ 
+class CompanyInfoDeleteView(View):
+    template_name = 'company_info_delete.html'
+
+    def get(self, request, pk):  # <-- pk ni qabul qilish
+        company_info = get_object_or_404(CompanyInfo, pk=pk)
+        company_info.delete()
+        return redirect('main:company_info')
+
+    
+           
+class AddCategoryView(View):
+    def get(self, request):
+        form = CategoryForm()
+        categories = Category.objects.all()
+        return render(request, 'add_category.html', {'categories':categories, 'form': form})
+
+    def post(self, request):
+        form = CategoryForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('main:company_info')
+        return render(request, 'add_category.html', {'form': form})
+
+
+class DeleteCategoryView(View):
+    def get(self, request, category_id):
+        category = get_object_or_404(Category, pk=category_id)
+        category.delete()
+        return redirect('main:add_category')
+    
 
 class CompanyInfoUpdateView(LoginRequiredMixin, UpdateView):
     model = CompanyInfo
@@ -234,37 +266,69 @@ class CompanyStructureView(LoginRequiredMixin, View):
     def get(self, request):
         form = CompanyStructureForm()
         try:
-            latest_company_info = CompanyStructure.objects.latest('add_date')
+            company_structure = CompanyStructure.objects.all()
         except CompanyStructure.DoesNotExist:
-            latest_company_info = None
-        return render(request, 'company_structure.html', {'form': form, 'latest_company_info': latest_company_info})
+            company_structure = None
+        return render(request, 'company_structure.html', {'form': form, 'company_structure': company_structure})
 
     def is_video(self, file_path):
         video_extensions = ['.mp4', '.avi', '.mov', '.mkv', '.flv', '.wmv']
         _, extension = os.path.splitext(file_path)
         return extension.lower() in video_extensions    
-        
+
+
+class CompanyStructureAddView(View):
+    template_name = 'company_structure_add.html'  # Bu shablon forma ko'rsatilgan sahifa nomi bo'lishi kerak
+
+    def get(self, request):
+        form = CompanyStructureForm()
+        return render(request, self.template_name, {'form': form})
+
     def post(self, request):
         form = CompanyStructureForm(request.POST, request.FILES)
-
         if form.is_valid():
-            video_file = request.FILES.get('video')
-            if video_file and not self.is_video(video_file.name):
-                form.add_error('video', 'Fayl formati noto\'g\'ri. Faqat video fayllarni yuklash mumkin.')
-                return render(request, 'company_structure.html', {'form': form})
-
             form.save()
-            messages.success(request, 'Malumot muvaffaqiyatli saqlandi.')
-            return redirect('main:company_structure')
+            return redirect('main:company_structure')  # Ma'lumotlar bazasiga saqlandiktan so'ng "company_info" sahifasiga o'tkazib beriladi
         else:
-            messages.error(request, 'Xatolik yuz berdi, iltimos, ma\'lumotlarni tekshiring.')
-            return render(request, 'company_structure.html', {'form': form})
+            errors = form.errors
+            return render(request, self.template_name, {'form': form, "errors": errors})
+        
+    
+class CompanyStructureDeleteView(View):
+    template_name = 'company_structure_delete.html'
+
+    def get(self, request, pk):  # <-- pk ni qabul qilish
+        company_structure = get_object_or_404(CompanyStructure, pk=pk)
+        company_structure.delete()
+        return redirect('main:company_structure')
+
+
+class AddCategoryStructureView(View):
+    def get(self, request):
+        form = CategoryStructureForm()  # Creating an instance of CategoryStructureForm for GET request
+        categories = CategoryStructure.objects.all()  # Fetching all existing categories
+        return render(request, 'add_category_structure.html', {'categories': categories, 'form': form})
+
+    def post(self, request):
+        form = CategoryStructureForm(request.POST)  # Creating an instance of CategoryStructureForm with POST data
+        if form.is_valid():  # Checking if form data is valid
+            form.save()  # Saving the form data to the database
+            return redirect('main:company_structure')  # Redirecting to the appropriate URL upon successful form submission
+        # If form data is not valid, rendering the form template again with the form data and any validation errors
+        return render(request, 'add_category_structure.html', {'form': form})
+
+class DeleteCategoryStructureView(View):
+    def get(self, request, category_id):
+        category = get_object_or_404(CategoryStructure, pk=category_id)
+        category.delete()
+        return redirect('main:category_structure_add')
+    
     
 class CompanyStructureUpdateView(LoginRequiredMixin, UpdateView):
-    model = CompanyStructure
-    form_class = CompanyStructureForm
-    template_name = 'update_company_structure.html'
-    success_url = reverse_lazy('main:company_structure')
+    model = CompanyStructure  # Specify the model to work with
+    form_class = CompanyStructureForm  # Specify the form class to use
+    template_name = 'update_company_structure.html'  # Specify the template to render
+    success_url = reverse_lazy('main:company_structure')  # Specify the URL to redirect after successful form submission
     
     def form_valid(self, form):
         return super().form_valid(form)

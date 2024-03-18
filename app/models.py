@@ -61,6 +61,13 @@ class Advance(models.Model):
     def __str__(self) -> str:
         return self.desc
 
+
+
+class Category(models.Model):
+    name = models.CharField(max_length=255, verbose_name="Enter the category name")
+    def __str__(self) -> str:
+        return self.name
+    
 class CompanyInfo(models.Model):
     text = models.TextField(null=True, blank=True)
     video = models.FileField(upload_to="files/", blank=True)
@@ -68,8 +75,17 @@ class CompanyInfo(models.Model):
         validators.FileExtensionValidator(allowed_extensions=['ico','png','jpeg','jpg'], 
             message="Enter an image in the format below('ico','png','jpeg','jpg')")
         ])
+    pdf = models.FileField(upload_to='pdfs/', blank=True)
+    category = models.OneToOneField(Category, on_delete=models.CASCADE, verbose_name="Enter the category")
     add_date = models.DateTimeField(auto_now_add=True)
 
+
+class CategoryStructure(models.Model):
+    name = models.CharField(max_length=255, verbose_name="Enter the category name")
+    def __str__(self) -> str:
+        return self.name
+    
+    
 class CompanyStructure(models.Model):
     text = models.TextField(null=True, blank=True)
     video = models.FileField(upload_to="files/", blank=True)
@@ -77,7 +93,10 @@ class CompanyStructure(models.Model):
         validators.FileExtensionValidator(allowed_extensions=['ico','png','jpeg','jpg'], 
             message="Enter an image in the format below('ico','png','jpeg','jpg')")
         ])
+    pdf = models.FileField(upload_to='pdfs/', blank=True)
+    category = models.OneToOneField(CategoryStructure, on_delete=models.CASCADE, verbose_name="Enter the category")
     add_date = models.DateTimeField(auto_now_add=True)
+    
 
 class Offer(models.Model):
     desc = models.TextField(verbose_name="Enter the task !", blank=True)

@@ -14,6 +14,18 @@
           {% csrf_token %}
           <div class="list-group">
             <div class="list-group-item">
+              <label for="category">
+                <span class="icon-license"></span> Kategoriya nomini tanlang :</label>
+              {{ form.category }}
+            </div>
+
+            <div class="list-group-item">
+              <label for="pdf">
+                <span class="icon-license"></span> Faylni kiriting :</label>
+              {{ form.pdf }}
+            </div>
+            
+            <div class="list-group-item">
               <label for="text"
                 ><span class="icon-license"></span> Kompaniya haqida ma'lumot
                 kiriting :</label
@@ -59,16 +71,19 @@
 
 <script>  
   document.addEventListener("DOMContentLoaded", function () {
-    document
-      .getElementById("update_company_structure_form")
+    var textInput = document.getElementById("id_text")
+      document.getElementById("update_company_structure_form")
       .addEventListener("submit", function (event) {
-        var textValue = document.getElementById("text").value.trim();
+        var textValue = document.getElementById("id_text").value.trim();
 
         if (textValue === "" ) {
           alert("Iltimos, barcha maydonlarni to'ldiring!");
           event.preventDefault();
         }
       });
+      
+    textInput.style.width = "320px"
+    textInput.style.height = "100px"
   });
 </script>
 

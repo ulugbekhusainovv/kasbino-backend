@@ -1,9 +1,9 @@
-from .serializer import (EmployeeSerializer,TaskSerializer, TelegramUserSerializer, AdvanceSerializer, OfferSerializer, ComplaintSerializer, CompanyInfoSerializer, CompanyStructureSerializer, AttendanceSerializer)
+from .serializer import (EmployeeSerializer,TaskSerializer, TelegramUserSerializer, AdvanceSerializer, OfferSerializer, ComplaintSerializer, CompanyInfoSerializer, CompanyStructureSerializer, AttendanceSerializer, CategoryCompanyInfoSeralizer, CategoryStructureSeralizer)
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
-from app.models import (Employee, Task,TelegramUser, Advance, CompanyInfo, CompanyStructure, Offer, Complaint, Attendance)
+from app.models import (Employee, Task,TelegramUser, Advance, CompanyInfo, CompanyStructure, Offer, Complaint, Attendance, CategoryStructure, Category)
 from datetime import  datetime
 import pytz
 from rest_framework.exceptions import ValidationError
@@ -38,21 +38,6 @@ class GetUser(APIView):
 class EmployeeViewset(ModelViewSet):
     queryset = Employee.objects.all()
     serializer_class = EmployeeSerializer
-
-# class GetEmployee(APIView):
-#     def get(self, request,  *args, **kwargs):
-#         data = request.data
-#         data = data.dict()
-#         if data.get('telegram_id',None):
-#             try:
-#                 employee = Employee.objects.get(telegram_id__telegram_id=data['telegram_id'])
-#                 serializer = EmployeeSerializer(employee, partial=True)
-#                 return Response(serializer.data, status=status.HTTP_206_PARTIAL_CONTENT)
-#             except Employee.DoesNotExist:
-#                 return Response({'error': 'Not found'}, status=status.HTTP_404_NOT_FOUND)
-#         else:
-#             return Response({'error':'Not found'},status=status.HTTP_404_NOT_FOUND)
-
 
 
 class GetEmployee(APIView):
@@ -222,6 +207,15 @@ class CompanyStructureAPIView(APIView):
         serializer = CompanyStructureSerializer(company_structure, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
     
+
+class CategoryInfoViewSet(ModelViewSet):
+    queryset = Category.objects.all()
+    serializer_class = CategoryCompanyInfoSeralizer
+
+class CategoryStructuraViewSet(ModelViewSet):
+    queryset = CategoryStructure.objects.all()
+    serializer_class = CategoryStructureSeralizer
+
 class AttendanceAPIView(APIView):
     def get(self, request, *args, **kwargs):
         uzbekistan_timezone = pytz.timezone('Asia/Tashkent')

@@ -2,90 +2,80 @@
 {% load static %}
 {% block content %}
 
-<!-- START PAGE CONTAINER -->
-{% if latest_company_info is not None %}
-<div class="block-content padding-top-40">
-    <div class="row">
-        <div class="col-md-12">    
-            <div class="block block-condensed padding-top-5">
-                <form method="post" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    <div class="list-group">                                        
-                        <div class="list-group-item col-md-12">
-                            <label for="task_name">{{ latest_company_info.text }}</label>
-                        </div>
-                        {% if latest_company_info.image %}
-                        <div class="list-group-item col-md-6">
-                            <label for="task_name"></label>
-                            <div class="image-container">
-                                <img src="{{ latest_company_info.image.url }}" alt="Rasm" width="415" height="300">
-                            </div>
-                        </div>
-                        {% endif %}
+<div class="block-content padding-top-10">
+    <div class="heading-elements padding-top-40" style="margin-left: 10px;">
+        <a href="{% url 'main:company_info_add' %}" id="addEmployeeLink">
+            <button class="btn btn-primary btn-icon-fixed" style="margin-top: 10px;"><span class="fa fa-edit"></span> Yangi ma'lumot qo'shish </button>
+        </a>
 
-                        {% if latest_company_info.video %}
-                        <div class="list-group-item col-md-6">
-                            <label for="task_name"></label>
-                            <div class="video-container">
-                                <video width="415" height="300" controls>
-                                    <source src="{{ latest_company_info.video.url }}" type="video/mp4">
-                                </video>
-                            </div>
+        <a href="{% url 'main:add_category' %}" id="addEmployeeLink">
+            <button class="btn btn-primary btn-icon-fixed" style="margin-top: 10px;"><span class="fa fa-usb"></span> Kategoriya qo'shish </button>
+        </a>
+    </div>
+</div>
+
+{% if company_info %}
+<div class="block-content padding-top-5">
+    <div class="row">
+        <div class="col-md-12">
+            {% for info in company_info %}
+            <div class="block block-condensed padding-top-5">
+                <div class="list-group">
+                    <div class="list-group-item col-md-12"><span class="fa fa-sitemap"></span> Ma'lumot turi :
+                        <label for="category">{{ info.category }}</label>
+                    </div>
+
+                    <div class="list-group-item col-md-12"><span class="fa fa-file-text-o"></span> Ma'lumot tasnifi :
+                        <label for="text">{{ info.text }}</label>
+                    </div>
+
+                    <div class="list-group-item col-md-12"><span class="fa fa-file-pdf-o"></span> Qo'shimcha ma'lumot:
+                        <label for="pdf">{{ info.pdf }}</label>
+                    </div>
+
+                    {% if info.image %}
+                    <div class="list-group-item col-md-6">
+                        <label for="image"></label>
+                        <div class="image-container">
+                            <img src="{{ info.image.url }}" alt="Image" width="420" height="200">
                         </div>
-                        {% endif %}
-                        <div class="list-group-item col-md-3">
-                            <a href="{% url 'main:update_company_info' latest_company_info.id %}" class="btn btn-primary btn-clean btn-block btn-xs">
-                                <span class="fa fa-refresh"></span> Ma'lumotni yangilash
-                            </a> 
+                    </div>
+                    {% endif %}
+
+                    {% if info.video %}
+                    <div class="list-group-item col-md-6">
+                        <label for="video"></label>
+                        <div class="video-container">
+                            <video width="420" height="200" controls>
+                                <source src="{{ info.video.url }}" type="video/mp4">
+                            </video>
                         </div>
-                    </div> 
-                </form>
-            </div>                                
+                    </div>
+                    {% endif %}
+
+                    <div class="list-group-item col-md-2">
+                        <a href="{% url 'main:update_company_info' info.id %}" class="btn btn-primary btn-clean btn-block btn-xs">
+                            <span class="fa fa-refresh"></span> Taxrirlash
+                        </a> 
+                    </div>
+                    <div class="list-group-item col-md-2">
+                        <a href="{% url 'main:delete_company_info' pk=info.pk %}" class="btn btn-danger btn-clean btn-block btn-xs">
+                            <span class="fa fa-trash"></span> O'chirish
+                        </a> 
+                    </div>
+                </div> 
+            </div>
+            {% endfor %}
         </div>
     </div>                        
 </div>
 {% else %}
-<!-- START PAGE CONTAINER -->
-<div class="block-content padding-top-40">
-    <div class="row">
-        <div class="col-md-12">    
-            <div class="block block-condensed padding-top-5">
-                <form method="post" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    <div class="list-group">                                        
-                        <div class="list-group-item col-md-12">
-                            <label for="text">Korxona tavsifi haqida ma'lumot kiriting :</label>
-                            <input type="text" name="text" id="text" required>
-                        </div>
-
-                        <div class="list-group-item col-md-6">
-                            <label for="image">Rasm yuklang:</label>
-                            <input type="file" name="image" id="image" accept="image/*" >
-                        </div>
-
-                        <div class="list-group-item col-md-6">
-                            <label for="video">Video yuklang:</label>
-                            <input type="file" name="video" id="video" accept="video/*">
-                        </div>
-                        <div class="list-group-item col-md-12">
-                            <button type="submit" class="btn btn-primary">Saqlash</button>
-                        </div>
-                    </div>
-
-                    {% if messages %}
-                        <ul class="messages">
-                            {% for message in messages %}
-                                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-                            {% endfor %}
-                        </ul>
-                    {% endif %}
-                
-                </form>
-            </div>                                
-        </div>
-    </div>                        
+<div class="alert alert-danger" role="alert" style="margin-top:60px">
+    <ul>
+        <h2>Ma'lumot topilmadi, yangi ma'lumot qo'shing !</h2>
+    </ul>
 </div>
-
 {% endif %}
+
 <!-- END APP WRAPPER -->                
 {% endblock %}

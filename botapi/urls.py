@@ -1,5 +1,5 @@
 from django.urls import path,include
-from .views import (BotUserViewset,GetUser, EmployeeViewset, GetEmployee, TaskViewset, GetTask, AdvanceViewset, GetAdvance, OfferViewset, GetOffer, ComplaintViewset, GetComplaint, UpdateTaskStatus , UpdateTaskAccepted , CompanyStructureAPIView, CompanyInfoAPIView, AttendanceAPIView)
+from .views import (BotUserViewset,GetUser, EmployeeViewset, GetEmployee, TaskViewset, GetTask, AdvanceViewset, GetAdvance, OfferViewset, GetOffer, ComplaintViewset, GetComplaint, UpdateTaskStatus , UpdateTaskAccepted , CompanyStructureAPIView, CompanyInfoAPIView, AttendanceAPIView, CategoryInfoViewSet, CategoryStructuraViewSet)
 from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
@@ -9,6 +9,8 @@ router.register('tasks', TaskViewset)
 router.register('advances', AdvanceViewset)
 router.register('offers', OfferViewset)
 router.register('complaints', ComplaintViewset)
+router.register('category_info', CategoryInfoViewSet)
+router.register('category_structure', CategoryStructuraViewSet)
 
 urlpatterns = [
     path('',include(router.urls)),

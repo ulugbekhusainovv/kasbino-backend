@@ -1,10 +1,18 @@
 from django.contrib import admin
-from .models import (Task, Employee, CompanyInfo, CompanyStructure, TelegramUser, Advance, Complaint, Offer,Attendance)
+from .models import (Task, Employee, CompanyInfo, CompanyStructure, TelegramUser, Advance, Complaint, Offer,Attendance, Category, CategoryStructure)
 from django.utils.html import format_html
 
 # Register your models here.
 
+@admin.register(Category)
+class CategoryModelAdmin(admin.ModelAdmin):
+    list_display = ['name']
+    
 
+@admin.register(CategoryStructure)
+class CategoryStructureModelAdmin(admin.ModelAdmin):
+    list_display = ['name']
+    
 @admin.register(Task)
 class TaskModelAdmin(admin.ModelAdmin):
     list_display = ['name', 'display_employees', 'add_date', 'task_status']

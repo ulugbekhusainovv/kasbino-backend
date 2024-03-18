@@ -169,6 +169,28 @@
                             </li>        
                         </ul>
                     </div>
+
+                    {% if errors %}
+                    <script>
+                        // Function to display errors as an alert
+                        function displayErrors() {
+                            var errorMessage = "Xatolik ! Iltimos boshqa kategoriya tanlang !\n";
+                            {% for field, field_errors in errors.items %}
+                                {% for error in field_errors %}
+                                    errorMessage += "- {{ error }}\n";
+                                {% endfor %}
+                            {% endfor %}
+                            alert(errorMessage);
+                        }
+
+                        // Call the function to display errors when the page loads
+                        window.onload = function() {
+                            displayErrors();
+                        };
+                    </script>
+                    {% endif %}
+
+
                     <div class="alert-container">
                         {% if messages %}
                             <ul class="messages">

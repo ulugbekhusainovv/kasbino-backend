@@ -1,0 +1,85 @@
+{% extends "wrapper.html" %} 
+{% load static %} 
+{% block content %}
+
+<style>
+    .custom-file-upload {
+        border: 1px solid #ccc;
+        display: inline-block;
+        padding: 6px 12px;
+        cursor: pointer;
+        border-radius: 4px;
+        background-color: #f0f0f0;
+        color: #333;
+        font-size: 16px;
+    }
+    
+    .custom-file-upload:hover {
+        background-color: #e0e0e0;
+    }
+
+    /* Image va video yuklash buttonlarining rangini o'zgartirish */
+    .custom-file-upload[type="file"] {
+        background-color: #337ab7; /* Boshqa ranglar kerak bo'lsa, ularga mosrangni o'zgartiring */
+        color: #fff;
+        border-color: #2e6da4;
+    }
+    .maydon input[type="text"] {
+        padding: 20px; /* yoki istalgan boshqa kattalik */
+        width: 100%; /* Matn maydoni to'liq ekran eniga moslashishi */
+    }
+    .custom-file-upload[type="file"]:hover {
+        background-color: #286090;
+        border-color: #204d74;
+    }
+</style>
+
+<form method="post" action="{% url 'main:add_category' %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="list-group">                                        
+        <div class="list-group-item col-md-12 maydon margin-top-50">
+            <input type="text" name="name" id="name" required placeholder="Kategoriya nomini kiriting">
+        </div>
+ 
+        <div class="list-group-item col-md-12">
+            <a href="{% url 'main:company_info' %}" class="btn btn-primary">
+                <span class="fa fa-reply"></span> Ortga qaytish
+            </a>
+            <button type="submit" class="btn btn-success">
+                <span class="fa fa-save"></span> Saqlash
+            </button>
+        </div>        
+    </div>
+</form>
+
+<div class="container">
+    <div class="row">
+        {% if categories %}
+        {% for task in categories %}
+        <div class="col-md-4 col-xs-6">                                
+            <div class="block block-condensed padding-top-5">
+                <div class="list-group">                                            
+                    <div class="list-group-item"><span class="fa fa-sitemap"></span> Kategoriya: {{ task.name }}</div>
+                </div>    
+                <div class="block-content padding-top-20">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <a href="{% url 'main:delete_category' task.id %}" class="btn btn-danger btn-clean btn-block btn-xs"><span class="fa fa-trash-o"></span> O'chirish</a>
+                        </div>                                                    
+                    </div>                                        
+                </div>
+            </div>                                
+        </div>
+        {% endfor %}
+        {% else %}
+        <div class="alert alert-danger" role="alert" style="margin-top:60px">
+            <ul>
+                <h2>Kategoriyalar mavjud emas</h2>
+            </ul>
+        </div>
+        {% endif %}
+    </div>                        
+</div>
+
+
+{% endblock %}
