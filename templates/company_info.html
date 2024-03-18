@@ -24,14 +24,15 @@
                     <div class="list-group-item col-md-12"><span class="fa fa-sitemap"></span> Ma'lumot turi :
                         <label for="category">{{ info.category }}</label>
                     </div>
-
                     <div class="list-group-item col-md-12"><span class="fa fa-file-text-o"></span> Ma'lumot tasnifi :
                         <label for="text">{{ info.text }}</label>
                     </div>
-
+                    
+                    {% if info.pdf %}                    
                     <div class="list-group-item col-md-12"><span class="fa fa-file-pdf-o"></span> Qo'shimcha ma'lumot:
                         <label for="pdf">{{ info.pdf }}</label>
                     </div>
+                    {% endif %}
 
                     {% if info.image %}
                     <div class="list-group-item col-md-6">
